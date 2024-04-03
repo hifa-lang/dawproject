@@ -1,0 +1,3 @@
+[submodule "dawproject"]
+	path = dawproject
+	url = https://github.com/bitwig/dawproject.git
