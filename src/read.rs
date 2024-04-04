@@ -39,14 +39,14 @@ where
     pub fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
         let metadata_xml = self.zip.by_name("metadata.xml")?;
         let metadata: MetaData = yaserde::de::from_reader(metadata_xml)
-            .map_err(|e| DawprojectReadError::MetadataDeserializeError(e))?;
+            .map_err(DawprojectReadError::MetadataDeserializeError)?;
         self.metadata = Some(metadata);
         Ok(())
     }
     pub fn read_project(&mut self) -> Result<(), DawprojectReadError> {
         let project_xml = self.zip.by_name("project.xml")?;
         let project: Project = yaserde::de::from_reader(project_xml)
-            .map_err(|e| DawprojectReadError::ProjectDeserializeError(e))?;
+            .map_err(DawprojectReadError::ProjectDeserializeError)?;
         self.project = Some(project);
         Ok(())
     }
