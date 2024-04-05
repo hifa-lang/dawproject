@@ -16,10 +16,12 @@ pub enum DawprojectReadError {
     StdIoError(#[from] std::io::Error),
 }
 
+// TODO: Read other files in the `.dawproject` file.
 /// Read the `.dawproject` file.
-/// TODO: Read other files in the `.dawproject` file.
+#[derive(Clone, Debug)]
 pub struct DawprojectReader<R> {
     zip: zip::ZipArchive<R>,
+    file_names: Vec<String>,
     metadata: Option<MetaData>,
     project: Option<Project>,
 }
@@ -30,14 +32,23 @@ where
 {
     pub fn new(reader: R) -> Result<Self, DawprojectReadError> {
         let zip = zip::ZipArchive::new(reader)?;
+        let mut file_names = zip
+            .file_names()
+            .map(|f| f.to_string())
+            .collect::<Vec<String>>();
+        // sort the file names for consistent testing.
+        file_names.sort();
 
         Ok(DawprojectReader {
             zip,
+            file_names,
             metadata: None,
             project: None,
         })
     }
 
+    // TODO: check if the file exists.
+    // TODO: check if file is already read.
     pub fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
         let metadata_xml = self.zip.by_name("metadata.xml")?;
         let metadata: MetaData = yaserde::de::from_reader(metadata_xml)
@@ -56,8 +67,13 @@ where
     pub fn metadata(&self) -> Option<&MetaData> {
         self.metadata.as_ref()
     }
+
     pub fn project(&self) -> Option<&Project> {
         self.project.as_ref()
+    }
+
+    pub fn file_names(&self) -> impl Iterator<Item = &str> {
+        self.file_names.iter().map(|s| s.as_str())
     }
 }
 
