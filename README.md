@@ -9,12 +9,9 @@ A port of the [DAWproject](https://github.com/bitwig/dawproject) in Rust.
 
 ```rust
 use dawproject::DawprojectReader;
-use std::fs::File;
 
 // read dawproject file
-let file = File::open("tests/data/canon.dawproject").unwrap();
-let mut reader =
-    DawprojectReader::new(file).unwrap();
+let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
 reader.read_metadata().unwrap();
 reader.read_project().unwrap();
 // use it wherever you want

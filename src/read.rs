@@ -1,8 +1,8 @@
-use std::io::{Read, Seek};
-
+use crate::{MetaData, Project};
+use std::fs::File;
+use std::io::{BufReader, Read, Seek};
+use std::path::Path;
 use thiserror::Error;
-
-use crate::{metadata::MetaData, project::Project};
 
 #[derive(Error, Debug)]
 pub enum DawprojectReadError {
@@ -12,6 +12,8 @@ pub enum DawprojectReadError {
     MetadataDeserializeError(String),
     #[error("project.xml deserialize error: {0}")]
     ProjectDeserializeError(String),
+    #[error("std io error")]
+    StdIoError(#[from] std::io::Error),
 }
 
 /// Read the `.dawproject` file.
@@ -56,5 +58,13 @@ where
     }
     pub fn project(&self) -> Option<&Project> {
         self.project.as_ref()
+    }
+}
+
+impl DawprojectReader<BufReader<File>> {
+    pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, DawprojectReadError> {
+        let f = File::open(path).map_err(DawprojectReadError::StdIoError)?;
+        let reader = BufReader::new(f);
+        Self::new(reader)
     }
 }
