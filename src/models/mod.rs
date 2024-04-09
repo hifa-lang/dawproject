@@ -1,6 +1,7 @@
 use crate::{MetaData, Project};
 
-#[derive(Clone, Debug, PartialEq)]
+/// Dawproject structure
+#[derive(Clone, Debug, Default, PartialEq)]
 pub struct Dawproject {
     pub metadata: MetaData,
     pub project: Project,
