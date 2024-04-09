@@ -1,4 +1,4 @@
-use crate::{MetaData, Project};
+use crate::{Dawproject, MetaData, Project};
 use std::fs::File;
 use std::io::{BufReader, Read, Seek};
 use std::path::Path;
@@ -64,6 +64,12 @@ where
         Ok(())
     }
 
+    pub fn read_dawproject(&mut self) -> Result<(), DawprojectReadError> {
+        self.read_metadata()?;
+        self.read_project()?;
+        Ok(())
+    }
+
     pub fn metadata(&self) -> Option<&MetaData> {
         self.metadata.as_ref()
     }
@@ -75,9 +81,21 @@ where
     pub fn file_names(&self) -> impl Iterator<Item = &str> {
         self.file_names.iter().map(|s| s.as_str())
     }
+
+    pub fn build_dawproject(&mut self) -> Option<Dawproject> {
+        if self.metadata.is_some() && self.project.is_some() {
+            Some(Dawproject::new(
+                self.metadata.take().unwrap(),
+                self.project.take().unwrap(),
+            ))
+        } else {
+            None
+        }
+    }
 }
 
 impl DawprojectReader<BufReader<File>> {
+    /// Open a `.dawproject` file.
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self, DawprojectReadError> {
         let f = File::open(path).map_err(DawprojectReadError::StdIoError)?;
         let reader = BufReader::new(f);

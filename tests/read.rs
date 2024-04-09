@@ -4,14 +4,11 @@ use dawproject::DawprojectReader;
 fn read_canon_dawproject() {
     let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
 
-    reader.read_metadata().unwrap();
-    reader.read_project().unwrap();
+    reader.read_dawproject().unwrap();
+    let dawproject = reader.build_dawproject().unwrap();
 
-    let metadata = reader.metadata().unwrap();
-    let project = reader.project().unwrap();
-
-    assert_eq!(metadata.content.title, Some("Canon".into()));
-    assert_eq!(project.content.version, "1.0");
+    assert_eq!(dawproject.metadata.content.title, Some("Canon".into()));
+    assert_eq!(dawproject.project.content.version, "1.0");
     assert_eq!(
         reader.file_names().collect::<Vec<&str>>(),
         [

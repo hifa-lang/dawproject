@@ -12,9 +12,7 @@ use dawproject::DawprojectReader;
 
 // read dawproject file
 let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
-reader.read_metadata().unwrap();
-reader.read_project().unwrap();
+reader.read_dawproject().unwrap();
 // use it wherever you want
-let metadata = reader.metadata();
-let project = reader.project();
+let dawproject = reader.build_dawproject().unwrap();
 ```
