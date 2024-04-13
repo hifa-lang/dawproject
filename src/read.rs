@@ -1,3 +1,4 @@
+use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
 use crate::{Dawproject, MetaData, Project};
 use std::fs::File;
 use std::io::{BufReader, Read, Seek};
@@ -16,8 +17,8 @@ pub enum DawprojectReadError {
     StdIoError(#[from] std::io::Error),
 }
 
-// TODO: Read other files in the `.dawproject` file.
-/// Read the `.dawproject` file.
+// TODO: Read other files in `.dawproject` file.
+/// Read `.dawproject` file.
 #[derive(Clone, Debug)]
 pub struct DawprojectReader<R> {
     zip: zip::ZipArchive<R>,
@@ -49,15 +50,15 @@ where
 
     // TODO: check if the file exists.
     // TODO: check if file is already read.
-    pub fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
-        let metadata_xml = self.zip.by_name("metadata.xml")?;
+    fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
+        let metadata_xml = self.zip.by_name(METADATA_PATH)?;
         let metadata: MetaData = yaserde::de::from_reader(metadata_xml)
             .map_err(DawprojectReadError::MetadataDeserializeError)?;
         self.metadata = Some(metadata);
         Ok(())
     }
-    pub fn read_project(&mut self) -> Result<(), DawprojectReadError> {
-        let project_xml = self.zip.by_name("project.xml")?;
+    fn read_project(&mut self) -> Result<(), DawprojectReadError> {
+        let project_xml = self.zip.by_name(PROJECT_PATH)?;
         let project: Project = yaserde::de::from_reader(project_xml)
             .map_err(DawprojectReadError::ProjectDeserializeError)?;
         self.project = Some(project);
@@ -68,14 +69,6 @@ where
         self.read_metadata()?;
         self.read_project()?;
         Ok(())
-    }
-
-    pub fn metadata(&self) -> Option<&MetaData> {
-        self.metadata.as_ref()
-    }
-
-    pub fn project(&self) -> Option<&Project> {
-        self.project.as_ref()
     }
 
     pub fn file_names(&self) -> impl Iterator<Item = &str> {
@@ -91,6 +84,19 @@ where
         } else {
             None
         }
+    }
+
+    pub fn by_name(&mut self, name: &str) -> Result<zip::read::ZipFile, DawprojectReadError> {
+        self.zip
+            .by_name(name)
+            .map_err(DawprojectReadError::ZipError)
+    }
+
+    // Extract `.dawproject` file to a directory.
+    pub fn extract<P: AsRef<Path>>(&mut self, directory: P) -> Result<(), DawprojectReadError> {
+        self.zip
+            .extract(directory)
+            .map_err(DawprojectReadError::ZipError)
     }
 }
 

@@ -3,16 +3,19 @@
 [![Crate](https://img.shields.io/crates/v/dawproject.svg)](https://crates.io/crates/dawproject)
 [![API](https://docs.rs/dawproject/badge.svg)](https://docs.rs/dawproject)
 
-A port of the [DAWproject](https://github.com/bitwig/dawproject) in Rust.
+A port of [DAWproject](https://github.com/bitwig/dawproject) in Rust.
 
 # Usage
 
 ```rust
-use dawproject::DawprojectReader;
+use dawproject::{DawprojectReader, DawprojectWriter};
 
 // read dawproject file
 let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
 reader.read_dawproject().unwrap();
 // use it wherever you want
 let dawproject = reader.build_dawproject().unwrap();
+// Write
+let mut writer = DawprojectWriter::create("tests/data/copied_canon.dawproject").unwrap();
+writer.write_dawproject(&dawproject).unwrap();
 ```
