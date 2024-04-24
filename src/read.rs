@@ -93,6 +93,20 @@ where
         }
     }
 
+
+    pub fn build_dawproject_with_zip(self) -> Option<DawprojectWithZip<R>> {
+        if let Ok(dawproject) = self.build_dawproject() {
+            return Some(
+                DawprojectWithZip::new(
+                    dawproject,
+                    self.zip,
+                )
+            );
+        }
+
+        None
+    }
+
     pub fn by_name(&mut self, name: &str) -> Result<zip::read::ZipFile, DawprojectReadError> {
         self.zip
             .by_name(name)
