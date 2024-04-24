@@ -48,6 +48,10 @@ where
         })
     }
 
+    pub fn into_inner(self) -> zip::ZipArchive<R> {
+        self.zip
+    }
+
     // TODO: check if the file exists.
     // TODO: check if file is already read.
     fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
