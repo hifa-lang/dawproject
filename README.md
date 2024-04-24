@@ -5,7 +5,9 @@
 
 A port of [DAWproject](https://github.com/bitwig/dawproject) in Rust.
 
-# Usage
+## Usage
+
+You can read and write `.dawproject` file.
 
 ```rust
 use dawproject::{DawprojectReader, DawprojectWriter};
@@ -18,4 +20,10 @@ let dawproject = reader.build_dawproject().unwrap();
 // Write
 let mut writer = DawprojectWriter::create("tests/data/copied_canon.dawproject").unwrap();
 writer.write_dawproject(&dawproject).unwrap();
+```
+
+## install
+
+```bash
+git submodule update --init
 ```

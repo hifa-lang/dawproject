@@ -1,5 +1,5 @@
 use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
-use crate::{Dawproject, MetaData, Project};
+use crate::{Dawproject, DawprojectWithZip, MetaData, Project};
 use std::fs::File;
 use std::io::{BufReader, Read, Seek};
 use std::path::Path;
@@ -94,8 +94,8 @@ where
     }
 
 
-    pub fn build_dawproject_with_zip(self) -> Option<DawprojectWithZip<R>> {
-        if let Ok(dawproject) = self.build_dawproject() {
+    pub fn build_dawproject_with_zip(mut self) -> Option<DawprojectWithZip<R>> {
+        if let Some(dawproject) = self.build_dawproject() {
             return Some(
                 DawprojectWithZip::new(
                     dawproject,

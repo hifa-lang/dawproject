@@ -7,7 +7,7 @@ pub mod utils;
 mod write;
 
 /// This structure contains the metadata and project of DAWproject.
-pub use models::Dawproject;
+pub use models::{Dawproject, DawprojectWithZip};
 pub use read::{DawprojectReadError, DawprojectReader};
 /// Metadata of the `metadata.xml` file.
 pub use repositories::metadata::MetaData;

@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::{BufWriter, Read, Seek, Write};
 use std::path::Path;
 use thiserror::Error;
+use zip::write::SimpleFileOptions;
 
 #[derive(Error, Debug)]
 pub enum DawprojectWriteError {
@@ -43,8 +44,9 @@ where
     }
 
     fn write_metadata(&mut self, metadata: &MetaData) -> Result<(), DawprojectWriteError> {
+        let options = SimpleFileOptions::default();
         self.zip_writer
-            .start_file(METADATA_PATH, Default::default())
+            .start_file(METADATA_PATH, options)
             .map_err(DawprojectWriteError::ZipError)?;
         let xml_str = yaserde::ser::to_string_with_config(
             metadata,
@@ -68,8 +70,9 @@ where
         Ok(())
     }
     fn write_project(&mut self, project: &Project) -> Result<(), DawprojectWriteError> {
+        let options = SimpleFileOptions::default();
         self.zip_writer
-            .start_file(PROJECT_PATH, Default::default())
+            .start_file(PROJECT_PATH, options)
             .map_err(DawprojectWriteError::ZipError)?;
         let xml_str =
             yaserde::ser::to_string_with_config(project, &yaserde::ser::Config::default())
@@ -98,8 +101,9 @@ where
         name: &str,
         buf: &[u8],
     ) -> Result<(), DawprojectWriteError> {
+        let options = SimpleFileOptions::default();
         self.zip_writer
-            .start_file(name, Default::default())
+            .start_file(name, options)
             .map_err(DawprojectWriteError::ZipError)?;
         self.zip_writer.write_all(buf)?;
         Ok(())
