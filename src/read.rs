@@ -65,6 +65,7 @@ where
         Ok(())
     }
 
+    /// Read metadata and project.
     pub fn read_dawproject(&mut self) -> Result<(), DawprojectReadError> {
         self.read_metadata()?;
         self.read_project()?;
@@ -75,6 +76,8 @@ where
         self.file_names.iter().map(|s| s.as_str())
     }
 
+    /// Build a `Dawproject` structure.
+    /// If metadata and project are not read, return `None`.
     pub fn build_dawproject(&mut self) -> Option<Dawproject> {
         if self.metadata.is_some() && self.project.is_some() {
             Some(Dawproject::new(
