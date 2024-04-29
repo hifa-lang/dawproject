@@ -3,11 +3,12 @@
 [![Crate](https://img.shields.io/crates/v/dawproject.svg)](https://crates.io/crates/dawproject)
 [![API](https://docs.rs/dawproject/badge.svg)](https://docs.rs/dawproject)
 
-A port of [DAWproject](https://github.com/bitwig/dawproject) in Rust.
+Dawproject is a format for exchanging user data between digital audio workstations (DAWs).
+This project is port of [DAWproject](https://github.com/bitwig/dawproject) in Rust.
 
 ## Usage
 
-You can read and write `.dawproject` file.
+You can easily read and write `.dawproject` files.
 
 ```rust
 use dawproject::{DawprojectReader, DawprojectWriter};
@@ -22,7 +23,16 @@ let mut writer = DawprojectWriter::create("tests/data/copied_canon.dawproject").
 writer.write_dawproject(&dawproject).unwrap();
 ```
 
-## install
+## Documentations
+
+- [DAWproject](https://github.com/bitwig/dawproject)
+  - Bitwig DAWproject repository
+- [DAWPROJECT XML Reference](https://htmlpreview.github.io/?https://github.com/bitwig/dawproject/blob/main/Reference.html)
+  - Bitwig DawProject XML Reference
+- [Project Document](https://docs.rs/dawproject)
+  - This project document
+
+## Build Source
 
 ```bash
 git submodule update --init
