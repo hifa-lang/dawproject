@@ -1,5 +1,4 @@
-use xml_schema_derive::XmlSchema;
-// use yaserde::{YaDeserialize, YaSerialize};
+use hifa_xml_schema_derive::XmlSchema;
 
 #[derive(Debug, XmlSchema)]
 #[xml_schema(source = "dawproject/MetaData.xsd")]

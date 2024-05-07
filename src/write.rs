@@ -1,5 +1,6 @@
 use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
 use crate::{Dawproject, MetaData, Project};
+use hifa_yaserde::ser;
 use std::fs::File;
 use std::io::{BufWriter, Read, Seek, Write};
 use std::path::Path;
@@ -48,9 +49,9 @@ where
         self.zip_writer
             .start_file(METADATA_PATH, options)
             .map_err(DawprojectWriteError::ZipError)?;
-        let xml_str = yaserde::ser::to_string_with_config(
+        let xml_str = ser::to_string_with_config(
             metadata,
-            &yaserde::ser::Config {
+            &ser::Config {
                 perform_indent: true,
                 write_document_declaration: true,
                 indent_string: Some("    ".into()),
@@ -61,10 +62,10 @@ where
             .write_all(xml_str.as_bytes())
             .map_err(DawprojectWriteError::StdIoError)?;
         // TODO: refactor to this
-        // yaserde::ser::serialize_with_writer(
+        // ser::serialize_with_writer(
         //     metadata,
         //     self.zip_writer,
-        //     &yaserde::ser::Config::default(),
+        //     &ser::Config::default(),
         // )
         // .map_err(DawprojectWriteError::MetadataSerializeError)?;
         Ok(())
@@ -74,16 +75,15 @@ where
         self.zip_writer
             .start_file(PROJECT_PATH, options)
             .map_err(DawprojectWriteError::ZipError)?;
-        let xml_str =
-            yaserde::ser::to_string_with_config(project, &yaserde::ser::Config::default())
-                .map_err(DawprojectWriteError::ProjectSerializeError)?;
+        let xml_str = ser::to_string_with_config(project, &ser::Config::default())
+            .map_err(DawprojectWriteError::ProjectSerializeError)?;
         self.zip_writer
             .write_all(xml_str.as_bytes())
             .map_err(DawprojectWriteError::StdIoError)?;
-        // yaserde::ser::serialize_with_writer(
+        // ser::serialize_with_writer(
         //     project,
         //     self.zip_writer,
-        //     &yaserde::ser::Config::default(),
+        //     &ser::Config::default(),
         // )
         // .map_err(DawprojectWriteError::MetadataSerializeError)?;
         Ok(())
@@ -109,7 +109,7 @@ where
         Ok(())
     }
 
-    pub fn finish(&mut self) -> Result<W, DawprojectWriteError> {
+    pub fn finish(self) -> Result<W, DawprojectWriteError> {
         self.zip_writer
             .finish()
             .map_err(DawprojectWriteError::ZipError)

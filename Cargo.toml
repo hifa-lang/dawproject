@@ -1,6 +1,6 @@
 [package]
 name = "dawproject"
-version = "0.3.1"
+version = "0.4.0"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/hifa-lang/dawproject.git"
 documentation = "https://docs.rs/dawproject/"
@@ -10,8 +10,8 @@ edition = "2021"
 
 [dependencies]
 thiserror = "1.0.58"
-xml-schema = "0.3.0"
-xml-schema-derive = "0.3.0"
-yaserde = "0.10.0"
-yaserde_derive = "0.10.0"
-zip = "1.1.2"
+hifa-xml-schema = "0.3.2"
+hifa-xml-schema-derive = "0.3.2"
+hifa_yaserde = "0.9.3"
+hifa_yaserde_derive = "0.9.3"
+zip = "=1.2.1"

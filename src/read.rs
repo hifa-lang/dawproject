@@ -1,5 +1,6 @@
 use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
 use crate::{Dawproject, DawprojectWithZip, MetaData, Project};
+use hifa_yaserde::de;
 use std::fs::File;
 use std::io::{BufReader, Read, Seek};
 use std::path::Path;
@@ -56,15 +57,15 @@ where
     // TODO: check if file is already read.
     fn read_metadata(&mut self) -> Result<(), DawprojectReadError> {
         let metadata_xml = self.zip.by_name(METADATA_PATH)?;
-        let metadata: MetaData = yaserde::de::from_reader(metadata_xml)
-            .map_err(DawprojectReadError::MetadataDeserializeError)?;
+        let metadata: MetaData =
+            de::from_reader(metadata_xml).map_err(DawprojectReadError::MetadataDeserializeError)?;
         self.metadata = Some(metadata);
         Ok(())
     }
     fn read_project(&mut self) -> Result<(), DawprojectReadError> {
         let project_xml = self.zip.by_name(PROJECT_PATH)?;
-        let project: Project = yaserde::de::from_reader(project_xml)
-            .map_err(DawprojectReadError::ProjectDeserializeError)?;
+        let project: Project =
+            de::from_reader(project_xml).map_err(DawprojectReadError::ProjectDeserializeError)?;
         self.project = Some(project);
         Ok(())
     }
@@ -93,15 +94,9 @@ where
         }
     }
 
-
     pub fn build_dawproject_with_zip(mut self) -> Option<DawprojectWithZip<R>> {
         if let Some(dawproject) = self.build_dawproject() {
-            return Some(
-                DawprojectWithZip::new(
-                    dawproject,
-                    self.zip,
-                )
-            );
+            return Some(DawprojectWithZip::new(dawproject, self.zip));
         }
 
         None

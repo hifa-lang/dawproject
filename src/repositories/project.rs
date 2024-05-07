@@ -1,4 +1,4 @@
-use xml_schema_derive::XmlSchema;
+use hifa_xml_schema_derive::XmlSchema;
 // use yaserde::{YaDeserialize, YaSerialize};
 
 #[derive(Debug, XmlSchema)]
