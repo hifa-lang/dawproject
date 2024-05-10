@@ -7,9 +7,9 @@ fn main() {
             .output()
             .expect("Sync submodules failed!");
 
-        const PROJECT_XSD: &str = include_str!("./dawproject/Project.xsd");
+        let project_xsd: String = std::fs::read_to_string("dawproject/Project.xsd").unwrap();
 
-        let fixed_project_xsd = PROJECT_XSD.replace(
+        let fixed_project_xsd = project_xsd.replace(
             "<xs:attribute name=\"contentType\">",
             "<xs:attribute name=\"contentTypes\">",
         );
