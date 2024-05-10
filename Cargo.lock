@@ -367,15 +367,15 @@ checksum = "95505c38b4572b2d910cecb0281560f54b440a19336cbbcb27bf6ce6adc6f5a8"
 
 [[package]]
 name = "hifa-xml-schema"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7ba986ad3121660562aa6c0dbe631565fa18eb67f84d7eeb8ccbae10c34207dc"
+checksum = "5c374202bcd5c9c66469f4b48962458984393c1a3fce3606001f42c739dbf3d6"
 
 [[package]]
 name = "hifa-xml-schema-derive"
-version = "0.3.4"
+version = "0.3.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ffd0d08f575cac286f270a602726f657cfed3a9edf0f191c0899584390f6b79"
+checksum = "99455ef01aaadad3a2cf1347240f0b0021aee023ab104218717fbc2cc0ab55a8"
 dependencies = [
  "darling",
  "heck",
