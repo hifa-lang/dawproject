@@ -167,7 +167,7 @@ dependencies = [
 
 [[package]]
 name = "dawproject"
-version = "0.5.0"
+version = "0.5.1"
 dependencies = [
  "hifa-xml-schema",
  "hifa-xml-schema-derive",
