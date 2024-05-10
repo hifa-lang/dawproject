@@ -7,14 +7,19 @@ fn main() {
             .output()
             .expect("Sync submodules failed!");
 
-        let project_xsd: String = std::fs::read_to_string("dawproject/Project.xsd").unwrap();
+        // MetaData.xsd
+        let fixed_metadata_xsd: String =
+            std::fs::read_to_string("dawproject/MetaData.xsd").unwrap();
 
+        // Project.xsd
+        let project_xsd: String = std::fs::read_to_string("dawproject/Project.xsd").unwrap();
         let fixed_project_xsd = project_xsd.replace(
             "<xs:attribute name=\"contentType\">",
             "<xs:attribute name=\"contentTypes\">",
         );
 
         // Write file
-        std::fs::write("assets/Project.xsd", fixed_project_xsd).unwrap();
+        std::fs::write("assets/FixedMetaData.xsd", fixed_metadata_xsd).unwrap();
+        std::fs::write("assets/FixedProject.xsd", fixed_project_xsd).unwrap();
     }
 }
