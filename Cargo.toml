@@ -1,6 +1,6 @@
 [package]
 name = "dawproject"
-version = "0.6.1"
+version = "0.6.2"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/hifa-lang/dawproject.git"
 documentation = "https://docs.rs/dawproject/"
@@ -10,8 +10,8 @@ edition = "2021"
 
 [dependencies]
 thiserror = "1.0.58"
-hifa-xml-schema = "0.3.3"
-hifa-xml-schema-derive = "0.3.3"
+hifa-xml-schema = "0.3.4"
+hifa-xml-schema-derive = "0.3.4"
 hifa_yaserde = "0.9.3"
 hifa_yaserde_derive = "0.9.3"
 zip = { version = "1.2.2", features = ["deflate"], default-features = false }
