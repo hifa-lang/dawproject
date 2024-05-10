@@ -2,7 +2,7 @@ use dawproject::DawprojectReader;
 
 #[test]
 fn read_canon_dawproject() {
-    let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
+    let mut reader = DawprojectReader::open("assets/tests/canon.dawproject").unwrap();
 
     reader.read_dawproject().unwrap();
     let dawproject = reader.build_dawproject().unwrap();

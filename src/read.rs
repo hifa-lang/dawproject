@@ -1,4 +1,6 @@
-use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
+use crate::utils::consts::{
+    METADATA_PATH, PROJECT_CONTENT_TYPE, PROJECT_FIXED_CONTENT_TYPE, PROJECT_PATH,
+};
 use crate::{Dawproject, DawprojectWithZip, MetaData, Project};
 use hifa_yaserde::de;
 use std::fs::File;
@@ -63,9 +65,15 @@ where
         Ok(())
     }
     fn read_project(&mut self) -> Result<(), DawprojectReadError> {
-        let project_xml = self.zip.by_name(PROJECT_PATH)?;
-        let project: Project =
-            de::from_reader(project_xml).map_err(DawprojectReadError::ProjectDeserializeError)?;
+        let mut project_xml = self.zip.by_name(PROJECT_PATH)?;
+        // Change into fixed project.xml
+        let mut project_xml_string = String::new();
+        project_xml.read_to_string(&mut project_xml_string)?;
+        let fixed_project_xml =
+            project_xml_string.replace(PROJECT_CONTENT_TYPE, PROJECT_FIXED_CONTENT_TYPE);
+
+        let project: Project = de::from_str(&fixed_project_xml)
+            .map_err(DawprojectReadError::ProjectDeserializeError)?;
         self.project = Some(project);
         Ok(())
     }

@@ -1,4 +1,6 @@
-use crate::utils::consts::{METADATA_PATH, PROJECT_PATH};
+use crate::utils::consts::{
+    METADATA_PATH, PROJECT_CONTENT_TYPE, PROJECT_FIXED_CONTENT_TYPE, PROJECT_PATH,
+};
 use crate::{Dawproject, MetaData, Project};
 use hifa_yaserde::ser;
 use std::fs::File;
@@ -75,10 +77,14 @@ where
         self.zip_writer
             .start_file(PROJECT_PATH, options)
             .map_err(DawprojectWriteError::ZipError)?;
-        let xml_str = ser::to_string_with_config(project, &ser::Config::default())
+        let fixed_project_xml = ser::to_string_with_config(project, &ser::Config::default())
             .map_err(DawprojectWriteError::ProjectSerializeError)?;
+        // Change into original project.xml
+        let original_project_xml =
+            fixed_project_xml.replace(PROJECT_FIXED_CONTENT_TYPE, PROJECT_CONTENT_TYPE);
+
         self.zip_writer
-            .write_all(xml_str.as_bytes())
+            .write_all(original_project_xml.as_bytes())
             .map_err(DawprojectWriteError::StdIoError)?;
         // ser::serialize_with_writer(
         //     project,

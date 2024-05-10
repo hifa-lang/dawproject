@@ -14,12 +14,12 @@ You can easily read and write `.dawproject` files.
 use dawproject::{DawprojectReader, DawprojectWriter};
 
 // read dawproject file
-let mut reader = DawprojectReader::open("tests/data/canon.dawproject").unwrap();
+let mut reader = DawprojectReader::open("assets/tests/canon.dawproject").unwrap();
 reader.read_dawproject().unwrap();
 // use it wherever you want
 let dawproject = reader.build_dawproject().unwrap();
 // Write
-let mut writer = DawprojectWriter::create("tests/data/copied_canon.dawproject").unwrap();
+let mut writer = DawprojectWriter::create("assets/tests/copied_canon.dawproject").unwrap();
 writer.write_dawproject(&dawproject).unwrap();
 ```
 
