@@ -6,6 +6,8 @@ mod repositories;
 pub mod utils;
 mod write;
 
+pub use zip;
+
 /// This structure contains the metadata and project of DAWproject.
 pub use models::{Dawproject, DawprojectWithZip};
 pub use read::{DawprojectReadError, DawprojectReader};
