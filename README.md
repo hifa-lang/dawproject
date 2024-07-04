@@ -11,7 +11,7 @@ This project is port of [DAWproject](https://github.com/bitwig/dawproject) in Ru
 You can easily read and write `.dawproject` files.
 
 ```rust
-use dawproject::{DawprojectReader, DawprojectWriter};
+use dawproject::prelude::*;
 
 // read dawproject file
 let mut reader = DawprojectReader::open("assets/tests/canon.dawproject").unwrap();
