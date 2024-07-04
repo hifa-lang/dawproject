@@ -17,7 +17,6 @@ macro_rules! impl_base_trait {
     };
 }
 
-#[allow(dead_code)]
 pub trait NameableTrait {
     fn get_nameable(&self) -> Option<&Nameable>;
 
@@ -85,7 +84,6 @@ impl_base_trait!(NameableTrait, Nameable, get_nameable, Vst3Plugin, .base.base.b
 impl_base_trait!(NameableTrait, Nameable, get_nameable, ClapPlugin, .base.base.base.base);
 impl_base_trait!(NameableTrait, Nameable, get_nameable, AuPlugin, .base.base.base.base);
 
-#[allow(dead_code)]
 pub trait ReferenceableTrait: NameableTrait {
     fn get_referenceable(&self) -> Option<&Referenceable>;
 
@@ -341,7 +339,6 @@ impl_base_trait!(
     .base.base.base
 );
 
-#[allow(dead_code)]
 pub trait ParameterTrait: ReferenceableTrait {
     fn get_parameter(&self) -> Option<&Parameter>;
 
@@ -359,7 +356,6 @@ impl_base_trait!(ParameterTrait, Parameter, get_parameter, BoolParameter, .base)
 impl_base_trait!(ParameterTrait, Parameter, get_parameter, EnumParameter, .base);
 impl_base_trait!(ParameterTrait, Parameter, get_parameter, TimeSignatureParameter, .base);
 
-#[allow(dead_code)]
 pub trait LaneTrait: ReferenceableTrait {
     fn get_lane(&self) -> Option<&Lane>;
 }
@@ -368,7 +364,6 @@ impl_base_trait!(LaneTrait, Lane, get_lane, Lane,);
 impl_base_trait!(LaneTrait, Lane, get_lane, Track, .base);
 impl_base_trait!(LaneTrait, Lane, get_lane, Channel, .base);
 
-#[allow(dead_code)]
 pub trait TimelineTrait: ReferenceableTrait {
     fn get_timeline(&self) -> Option<&Timeline>;
 
@@ -391,7 +386,6 @@ impl_base_trait!(TimelineTrait, Timeline, get_timeline, MediaFile, .base);
 impl_base_trait!(TimelineTrait, Timeline, get_timeline, Audio, .base.base);
 impl_base_trait!(TimelineTrait, Timeline, get_timeline, Video, .base.base);
 
-#[allow(dead_code)]
 pub trait MediaFileTrait: TimelineTrait {
     fn get_media_file(&self) -> Option<&MediaFile>;
 
@@ -407,7 +401,6 @@ impl_base_trait!(MediaFileTrait, MediaFile, get_media_file, MediaFile,);
 impl_base_trait!(MediaFileTrait, MediaFile, get_media_file, Audio, .base);
 impl_base_trait!(MediaFileTrait, MediaFile, get_media_file, Video, .base);
 
-#[allow(dead_code)]
 pub trait DeviceTrait: ReferenceableTrait {
     fn get_device(&self) -> Option<&Device>;
 
@@ -468,7 +461,6 @@ impl_base_trait!(DeviceTrait, Device, get_device, Vst3Plugin, .base.base);
 impl_base_trait!(DeviceTrait, Device, get_device, ClapPlugin, .base.base);
 impl_base_trait!(DeviceTrait, Device, get_device, AuPlugin, .base.base);
 
-#[allow(dead_code)]
 pub trait PluginTrait: DeviceTrait {
     fn get_plugin(&self) -> Option<&Plugin>;
 
@@ -485,7 +477,6 @@ impl_base_trait!(PluginTrait, Plugin, get_plugin, Vst3Plugin, .base);
 impl_base_trait!(PluginTrait, Plugin, get_plugin, ClapPlugin, .base);
 impl_base_trait!(PluginTrait, Plugin, get_plugin, AuPlugin, .base);
 
-#[allow(dead_code)]
 pub trait BuiltinDeviceTrait: DeviceTrait {
     fn get_builtin_device(&self) -> Option<&BuiltinDevice>;
 }
@@ -525,7 +516,6 @@ impl_base_trait!(
     .base
 );
 
-#[allow(dead_code)]
 pub trait PointTrait {
     fn get_point(&self) -> Option<&Point>;
 
