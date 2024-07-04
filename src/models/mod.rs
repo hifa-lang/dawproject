@@ -1,3 +1,5 @@
+pub mod bases;
+
 use zip::ZipArchive;
 
 use crate::{MetaData, Project};
@@ -23,10 +25,9 @@ impl Dawproject {
     }
 }
 
-
 pub struct DawprojectWithZip<R> {
     pub dawproject: Dawproject,
-    pub zip: ZipArchive<R>
+    pub zip: ZipArchive<R>,
 }
 
 impl<R> DawprojectWithZip<R> {

@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 
 mod models;
+pub mod prelude;
 mod read;
 mod repositories;
 pub mod utils;
