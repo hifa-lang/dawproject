@@ -3,7 +3,7 @@ use std::process::Command;
 fn main() {
     if std::env::var("DOCS_RS").is_err() {
         Command::new("git")
-            .args(&["submodule", "update", "--init", "--recursive"])
+            .args(["submodule", "update", "--init", "--recursive"])
             .output()
             .expect("Sync submodules failed!");
 

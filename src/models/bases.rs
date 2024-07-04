@@ -22,20 +22,17 @@ pub trait NameableTrait {
 
     fn get_name(&self) -> Option<&str> {
         self.get_nameable()
-            .map(|nameable| nameable.name.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|nameable| nameable.name.as_deref())
     }
 
     fn get_color(&self) -> Option<&str> {
         self.get_nameable()
-            .map(|nameable| nameable.color.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|nameable| nameable.color.as_deref())
     }
 
     fn get_comment(&self) -> Option<&str> {
         self.get_nameable()
-            .map(|nameable| nameable.comment.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|nameable| nameable.comment.as_deref())
     }
 }
 impl_base_trait!(NameableTrait, Nameable, get_nameable, Nameable,);
@@ -89,8 +86,7 @@ pub trait ReferenceableTrait: NameableTrait {
 
     fn get_id(&self) -> Option<&str> {
         self.get_referenceable()
-            .map(|referenceable| referenceable.id.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|referenceable| referenceable.id.as_deref())
     }
 }
 
@@ -344,8 +340,7 @@ pub trait ParameterTrait: ReferenceableTrait {
 
     fn get_parameter_id(&self) -> Option<i32> {
         self.get_parameter()
-            .map(|parameter| parameter.parameter_id)
-            .flatten()
+            .and_then(|parameter| parameter.parameter_id)
     }
 }
 
@@ -369,8 +364,7 @@ pub trait TimelineTrait: ReferenceableTrait {
 
     fn get_time_unit(&self) -> Option<&TimeUnit> {
         self.get_timeline()
-            .map(|timeline| timeline.time_unit.as_ref())
-            .flatten()
+            .and_then(|timeline| timeline.time_unit.as_ref())
     }
 }
 
@@ -406,26 +400,22 @@ pub trait DeviceTrait: ReferenceableTrait {
 
     fn get_parameters(&self) -> Option<&Parameters> {
         self.get_device()
-            .map(|device| device.parameters.as_ref())
-            .flatten()
+            .and_then(|device| device.parameters.as_ref())
     }
 
     fn get_enabled(&self) -> Option<&BoolParameter> {
         self.get_device()
-            .map(|device| device.enabled.as_ref())
-            .flatten()
+            .and_then(|device| device.enabled.as_ref())
     }
 
     fn get_state(&self) -> Option<&FileReference> {
         self.get_device()
-            .map(|device| device.state.as_ref())
-            .flatten()
+            .and_then(|device| device.state.as_ref())
     }
 
     fn get_device_id(&self) -> Option<&str> {
         self.get_device()
-            .map(|device| device.device_id.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|device| device.device_id.as_deref())
     }
 
     fn get_device_name(&self) -> Option<&str> {
@@ -438,12 +428,11 @@ pub trait DeviceTrait: ReferenceableTrait {
 
     fn get_device_vendor(&self) -> Option<&str> {
         self.get_device()
-            .map(|device| device.device_vendor.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|device| device.device_vendor.as_deref())
     }
 
     fn get_loaded(&self) -> Option<bool> {
-        self.get_device().map(|device| device.loaded).flatten()
+        self.get_device().and_then(|device| device.loaded)
     }
 }
 
@@ -466,8 +455,7 @@ pub trait PluginTrait: DeviceTrait {
 
     fn get_plugin_version(&self) -> Option<&str> {
         self.get_plugin()
-            .map(|plugin| plugin.plugin_version.as_ref().map(|n| n.as_str()))
-            .flatten()
+            .and_then(|plugin| plugin.plugin_version.as_deref())
     }
 }
 
