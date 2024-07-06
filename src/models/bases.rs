@@ -366,6 +366,11 @@ pub trait TimelineTrait: ReferenceableTrait {
         self.get_timeline()
             .and_then(|timeline| timeline.time_unit.as_ref())
     }
+
+    fn get_track(&self) -> Option<&str> {
+        self.get_timeline()
+            .and_then(|timeline| timeline.track.as_deref())
+    }
 }
 
 impl_base_trait!(TimelineTrait, Timeline, get_timeline, Timeline,);
@@ -404,13 +409,11 @@ pub trait DeviceTrait: ReferenceableTrait {
     }
 
     fn get_enabled(&self) -> Option<&BoolParameter> {
-        self.get_device()
-            .and_then(|device| device.enabled.as_ref())
+        self.get_device().and_then(|device| device.enabled.as_ref())
     }
 
     fn get_state(&self) -> Option<&FileReference> {
-        self.get_device()
-            .and_then(|device| device.state.as_ref())
+        self.get_device().and_then(|device| device.state.as_ref())
     }
 
     fn get_device_id(&self) -> Option<&str> {
