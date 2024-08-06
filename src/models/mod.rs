@@ -1,4 +1,5 @@
 pub mod bases;
+pub mod parameters;
 
 use zip::ZipArchive;
 
