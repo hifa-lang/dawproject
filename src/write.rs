@@ -95,7 +95,13 @@ where
         Ok(())
     }
 
-    pub fn raw_copy_file(&mut self, file: zip::read::ZipFile) -> Result<(), DawprojectWriteError> {
+    pub fn raw_copy_file<R>(
+        &mut self,
+        file: zip::read::ZipFile<'_, R>,
+    ) -> Result<(), DawprojectWriteError>
+    where
+        R: Read,
+    {
         self.zip_writer
             .raw_copy_file(file)
             .map_err(DawprojectWriteError::ZipError)?;

@@ -110,7 +110,7 @@ where
         None
     }
 
-    pub fn by_name(&mut self, name: &str) -> Result<zip::read::ZipFile, DawprojectReadError> {
+    pub fn by_name(&mut self, name: &str) -> Result<zip::read::ZipFile<R>, DawprojectReadError> {
         self.zip
             .by_name(name)
             .map_err(DawprojectReadError::ZipError)
